@@ -2,6 +2,8 @@
 
 Demo navegável para validar as funcionalidades com a equipe da fazenda. Dados fictícios e simulações salvas exclusivamente no navegador. Não usa o Neon, não autentica usuários e não gera assinatura ou registro oficial de ponto.
 
+**Demo publicada:** [fazendalimoeiro.vercel.app](https://fazendalimoeiro.vercel.app). Acesso direto, sem login. [Tela do funcionário](https://fazendalimoeiro.vercel.app/ponto).
+
 ## Executar
 
 Ambiente verificado: Node.js 24 e npm.
@@ -32,4 +34,4 @@ Não inserir dados reais. As pessoas e documentos iniciais são fictícios. Abas
 
 ## Infraestrutura existente
 
-O setup Neon solicitado antes da demo permanece no projeto (`neon.ts`). `.env.local`, `.neon` e dependências estão ignorados no Git. O frontend não lê suas credenciais nem chama o banco. Não foram feitos migrations, commit, push ou publicação nesta entrega.
+O setup Neon solicitado antes da demo permanece no projeto (`neon.ts`). `.env.local`, `.neon` e dependências estão ignorados no Git e no upload da Vercel. O frontend não lê suas credenciais nem chama o banco; nenhuma migration foi executada. Código enviado à branch `main` de `MateusTeixeira9203/Fazenda-limoeiro` e publicado no projeto Vercel `fazendalimoeiro`, com autorização do usuário. A seção 15 da especificação registra a publicação e as verificações.

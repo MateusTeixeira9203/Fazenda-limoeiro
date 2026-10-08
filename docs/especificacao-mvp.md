@@ -338,7 +338,7 @@ Decisão do usuário em 08/10/2026: entregar primeiro um MVP navegável para exp
 
 **Dentro:** seis áreas navegáveis, ficha/cadastro fictícios, documento com leitura/aceite simulado, QR e tela mínima de ponto automático, intervalo configurável, apuração demonstrativa, fechamento/reabertura, exportação CSV, preferências, feedback por tela e mobile.
 
-**Fora:** backend, multiusuário real, dados reais, tokens oficiais/temporários de QR, assinatura jurídica, PDFs oficiais, regras legais de folha, migrations, commit, push e publicação. Configuração Neon preservada. Publicação necessita pedido explícito.
+**Fora:** backend, multiusuário real, dados reais, tokens oficiais/temporários de QR, assinatura jurídica, PDFs oficiais, regras legais de folha e migrations. Configuração Neon preservada. Commit, push e publicação foram autorizados posteriormente, conforme seção 15.
 
 | ID | Estado inicial → ação | Resultado esperado | Efeito proibido | Verificação / estado |
 | --- | --- | --- | --- | --- |
@@ -351,13 +351,13 @@ Decisão do usuário em 08/10/2026: entregar primeiro um MVP navegável para exp
 | D07 | App em 360/390/430px e desktop | Conteúdo e ações acessíveis, sem overflow da página | Botões inacessíveis ou texto cortado | PASSA — Playwright e capturas; tabelas com rolagem interna |
 | D08 | Setup Neon existente → executar demo/build | Nenhuma chamada ao Neon e segredos fora do bundle | Alterar dados/configuração remota ou expor credenciais | PASSA — zero requests externos no teste; nenhuma importação/conexão ao Neon em src; 38 arquivos do bundle sem valores de .env.local; segredos ignorados no Git |
 
-**Entrega do executor:** pronta para revisão local em `http://localhost:3000` e `/ponto`. Branch `master`, sem commits; arquivos não commitados. Um responsável, sem integrações concorrentes.
+**Entrega do executor:** pronta para revisão local em `http://localhost:3000` e `/ponto`; versão publicada e evidências na seção 15. Branch atual `main`. Um responsável, sem integrações concorrentes.
 
 **Evidências:** `npm run typecheck`, `npm test` (5 testes de domínio), `npm run test:e2e` (8 testes de navegador) e `npm run build` aprovados em Node 24 / Next 16.4.0 / Chromium headless. Testes em `tests/`. Capturas em `artifacts/overview-360.png`, `overview-390.png`, `overview-430.png`, `overview-desktop.png` e `worker-360.png`.
 
-**Não verificado / pendente:** aceite da fazenda, leitura física do QR com câmera de telefone, acesso pela rede Wi-Fi do usuário, regras operacionais/jurídicas, autenticação/autorização reais, presença física e publicação. Não há artefato visual aprovado para comparação.
+**Não verificado / pendente:** aceite da fazenda, leitura física do QR com câmera de telefone, acesso pela rede Wi-Fi do usuário, regras operacionais/jurídicas, autenticação/autorização reais e presença física. Não há artefato visual aprovado para comparação.
 
-**Dados e reversão:** sem migrations ou chamadas ao banco. Remover os arquivos novos do app ou restaurar os exemplos pela UI reverte a demo; exportar feedbacks antes de limpar o navegador. Configuração Neon preservada. Sem commit/push/deploy. Aceite do usuário e publicação permanecem pendentes.
+**Dados e reversão:** sem migrations ou chamadas ao banco. Restaurar os exemplos pela UI reverte as simulações; exportar feedbacks antes de limpar o navegador. Configuração Neon preservada. Para mudanças futuras, reverter o commit específico e republicar a versão conhecida. Aceite da fazenda permanece pendente.
 
 **Ajuste de acesso da demo (08/10/2026):** retirados matrícula/PIN do ponto e instruções de senha. Escolha do nome em botão → confirmação; IDs, apuração, sincronização local e encerramento da seleção após registrar continuam preservados. Verificação dirigida: testes de QR, fechamento e jornada de duas batidas, mais TypeScript e inspeção móvel.
 
@@ -368,3 +368,17 @@ O usuário autorizou explicitamente commits, push ao GitHub e publicação na Ve
 Escopo publicado: somente demonstração fictícia, sem login e sem chamadas ao Neon. `.env.local` e `.neon` ficam ignorados tanto pelo Git quanto pelo upload da Vercel. O QR publicado deverá apontar para a própria origem HTTPS.
 
 Gate anterior ao envio: TypeScript, 5 testes de domínio e 8 testes de navegador aprovados. Após publicar, verificar acesso anônimo ao painel, QR/tela do funcionário, cadastro/documento/assinatura, ponto e persistência local; registrar a versão e o resultado. Aceite dos usuários da fazenda permanece pendente.
+
+**Publicação verificada em 08/10/2026:** versão do aplicativo `50c9916668d8528caf10699b75de9993d3199b18`, enviada à `main`. Build de produção aprovado na Vercel; endereço público: https://fazendalimoeiro.vercel.app. Tela do funcionário: https://fazendalimoeiro.vercel.app/ponto. O envio à `main` também acionou a integração Git da Vercel. Este registro documental posterior não altera o aplicativo.
+
+| Verificação publicada | Estado / evidência |
+| --- | --- |
+| Visitante sem sessão abre painel e ponto | PASSA — HTTP 200, contexto Chromium novo, sem login nem cookies prévios |
+| Cadastro, documento, assinatura simulada e recarga | PASSA — teste de navegador na origem pública, relações por ID preservadas |
+| Ponto, duas/quatro batidas, fechamento, reabertura e CSV | PASSA — testes na origem pública; simulações restritas ao localStorage de QA |
+| Feedback e restauração dos exemplos | PASSA — persistência e exportação verificadas; reset preserva feedback |
+| Seis áreas em 360/390/430px e falha de armazenamento | PASSA — testes publicados, sem overflow da página; aviso de armazenamento preservado |
+| QR e link do funcionário | PASSA — QR gerado para a origem HTTPS pública; link abre `/ponto`, sem campos de login; tela verificada em 390px |
+| Erros e comunicação externa | PASSA — zero erros de página e zero requests externos ao navegar pelos módulos e abrir o ponto |
+
+**Evidências locais:** sete testes existentes executados contra a URL pública, mais verificação dirigida de acesso anônimo, destino do QR e tráfego. Capturas em `artifacts/production-worker-390.png` e `artifacts/production-qr-desktop.png`. Os dados sintéticos de QA ficaram no navegador temporário, sem alterações no Neon. Leitura física com câmera e aceite da fazenda continuam NÃO TESTADOS.
